@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <!--This is an D3 lesson transcription (from Code Institute Full-Stack Diploma course), comments below from lesson.-->
+   
+    <!--D3 is a set of objects functions and other good stuff that comes in the form of a third-party JavaScript file written by Mike Bostock, which you can use just like any external javascript file in the script tag and we've included it here.-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scalable Vector Graphics</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+</head>
+<body>
+    
+    <h1>Data Visualisation</h1>
+
+    <h2>D3 and Scalable Vector Graphics</h2>
+    
+    <!--so what D3 does is it creates SVG's similar to what we created in earlier units plus a lot more but it does it programmatically rather than in the form of markup one of the things d3 relies on is attaching itself to some HTML element such as a div for example you we're going to create an SVG inside that div with the ID draw here.-->
+    
+    <div id="draw-here"></div>
+    
+    
+    <!-- notice they're on line 22 we're using the d3 object and a function on that object called select so that attaches that the Select inside the Select we attach ourselves to they to the draw here ID also notice that d3 allows you to chain functions together you'll see they're separated by a dot that's it conveniently allows you to chain related functions together so you can see on line 23 we are programmatically creating an SVG element, then we're creating or assigning a width attribute and a height attribute to that SVG and the width and the height values are declared on lines 18 and 19 line 22 results in the creation of a variable or an object called SVG we could name or whatever we chose to name it would we're going to call SVG we then use that object then to call a particular function called select all and that select all will select all the circles we'll let's select as many circles as that are generated as a result of binding to the data on line 20.   so then we create a circle we're going to create a circle for each datum which is d each entry in the array the x value for each one will be set programmatically and we use an anonymous function here and the anonymous function can take one or two variables our parameters in our case we're using two at the moment d and i represents the individual data such as 40 50 10 and so on and I is the index of that data in the array by the way the naming D and I is just a convention you could call them  anything you want to but but Convention and dictates that we call them d and i so that will give us our our x-coordinate for each for each datum for each circle now we want to do is they on line 32 we constructed so that each entry the x-value of each entry is a hundred and fifty units to the right of its predecessor the y-coordinate splits the height of the viewport and into and you can see that here so these elements combine to be 500 pixels apart and the radius then for each one of these has been defined in the array so let's try a little experiment let's add an extra element to our to our data we do refresh we can't see it why not it's because that last element displayed but it's outside the maximum width of our viewport so keep an eye on that it catches people out in the beginning when they're learning d3 initially so we increase the width and there we can see it so that's a nice introduction to d3.-->
+    <script>
+        var w = "700";
+        var h = "200";
+        //Notice on we have a JavaScript array with five items and we're going to use those as the data to be provided to our SVG's.
+        
+        //We then use the array defined and pass it as a variable into our data function. We then use the enter function, then d3 enter function to bind the data to the circles which we are about to create.-->
+        //Radius for each element defined in array.
+        //var data = [40, 50, 10, 30, 20];
+        
+        //Doing experiment of adding an extra element '5' to array. However, when this is run it can't be seen as it's outside our viewport. 
+        //var data = [40, 50, 10, 30, 20, 5];
+        //We increase the width to 700 and then we can see the extra element (circle).
+        var data = [40, 50, 10, 30, 20, 5];
+       //notice we're using the d3 object and a function on that object called 'select' and inside the 'select' we attach ourselves to function draw-here ID.
+        //this creates an object (svg).  We then use that object, to call a particular function called selectAll(). It will select as many circles as generated, as a result of binding to the data (data array). We then use the data array and pass it into our data function.  We then use the d3 enter function to bind the data to the circles we're about to create. 
+        var svg = d3.select("#draw-here")
+        
+        //also notice d3 allows us to chain functions together, you will see they're separated by a dot.  Here we are programmatically creating an svg.
+        .append("svg")
+        //then we're assigning a width and height attribute, both values for width and height are declared above.
+        .attr("width", w)
+        .attr("height", h);
+        //selectAll() will select as many circles as generated, as a result of binding to the data (data array). We then use the data array and pass it into our data function.  We then use the d3 enter function to bind the data to the circles we're about to create. 
+        svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        
+        //We're going to create a circle for each datum, each entry in the array. The x value for each circle will be set programmatically.  We're using an annonymous function here, which can take 1 or 2 variables or parameters.  In our case, we're using 2 at the moment (d and i).  d respresents the individual datum (such as 40, 50,10 etc) and i is the index of that data in the array.  d and i are just conventions, any other names can be used. This will give our x co-ordinate for our individual datum.  We constructed it so that the x value of each entry is 150 units to the right of it's predecessor. 
+        .attr("cx", function (d, i) {
+            return 50 + (i * 100);
+            })
+            //The y co-ordinate splits the height of the viewport in 2.  You can see then in browser when code is run.  The elements comprise to be 500 pixels apart and the radius for each circle has been defined in the array.
+            .attr("cy", h / 2)
+            .attr("r", function (d) {
+                return d;
+            });
+          
+    </script>
+   
+</body>
+</html>
